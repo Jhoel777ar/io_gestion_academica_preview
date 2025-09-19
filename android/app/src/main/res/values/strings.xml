@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">gestion-academica</string>
-    <string name="title_activity_main">gestion-academica</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Gestión Académica</string>
+    <string name="title_activity_main">Gestión Académica</string>
+    <string name="package_name">com.gestionacademica.app</string>
+    <string name="custom_url_scheme">com.gestionacademica.app</string>
 </resources>

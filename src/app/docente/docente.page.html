@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Panel Docente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()">Cerrar sesión</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Botón agregar materia -->
+  <ion-button expand="block" color="success" (click)="setAddModalOpen(true)">
+    Agregar Materia
+  </ion-button>
+
+  <!-- Lista de materias -->
+  <ion-list>
+    <ion-item *ngFor="let m of materias">
+      <ion-label>
+        <h2>{{ m.nombre }}</h2>
+        <p>Código: {{ m.codigo }} - Créditos: {{ m.creditos }}</p>
+      </ion-label>
+      <ion-button (click)="setGradesModalOpen(true, m)">Notas</ion-button>
+      <ion-button color="primary" (click)="setEditModalOpen(true, m)">Editar</ion-button>
+      <ion-button color="danger" (click)="eliminarMateria(m.id!)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Modal agregar materia -->
+  <ion-modal [isOpen]="isAddModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Agregar Materia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setAddModalOpen(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="newMateria.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Código</ion-label>
+          <ion-input [(ngModel)]="newMateria.codigo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Créditos</ion-label>
+          <ion-input type="number" [(ngModel)]="newMateria.creditos"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="success" (click)="guardarMateria()">Guardar</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal editar materia -->
+  <ion-modal [isOpen]="isEditModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar Materia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setEditModalOpen(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="floating">Nuevo nombre</ion-label>
+          <ion-input [(ngModel)]="editMateria.nombre"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="primary" (click)="actualizarMateria()">Actualizar</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal notas (completo funcional) -->
+  <ion-modal [isOpen]="isGradesModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Notas de {{ currentMateria?.nombre }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setGradesModalOpen(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list *ngIf="notasMateria.length > 0; else sinNotas">
+          <ion-item *ngFor="let n of notasMateria">
+            <ion-label>
+              <h3>{{ n.estudiante.nombre }}</h3>
+              <p>{{ n.estudiante.email }}</p>
+            </ion-label>
+            <ion-input
+              type="number"
+              [(ngModel)]="n.nota"
+              placeholder="Nota"
+              min="0"
+              max="100"
+            ></ion-input>
+            <ion-button color="primary" (click)="actualizarNota(n)">Guardar</ion-button>
+          </ion-item>
+        </ion-list>
+        <ng-template #sinNotas>
+          <p>No hay estudiantes inscritos en esta materia.</p>
+        </ng-template>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-alert
+    [trigger]="alertTriggerId"
+    [header]="alertHeader"
+    [message]="alertMessage"
+    [buttons]="alertButtons"
+  ></ion-alert>
+
+</ion-content>

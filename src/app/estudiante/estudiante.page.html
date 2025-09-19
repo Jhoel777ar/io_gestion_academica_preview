@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Panel Estudiante</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()">Cerrar sesión</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h3>Materias Disponibles</h3>
+  <ion-list>
+    <ion-item *ngFor="let m of todasMaterias">
+      <ion-label>
+        <h2>{{ m.nombre }}</h2>
+        <p>Código: {{ m.codigo }} - Créditos: {{ m.creditos }} - Docente: {{ m.docenteNombre }}</p>
+      </ion-label>
+      <ion-button color="success" (click)="inscribirse(m.id)">Inscribirse</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <h3>Mis Inscripciones</h3>
+  <ion-list>
+    <ion-item *ngFor="let m of misMaterias">
+      <ion-label>
+        <h2>{{ m.nombre }}</h2>
+        <p>Código: {{ m.codigo }} - Docente: {{ m.docenteNombre }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <h3>Mis Calificaciones</h3>
+  <ion-list>
+    <ion-item *ngFor="let c of calificaciones">
+      <ion-label>
+        <h2>Materia: {{ c.materiaNombre }}</h2>
+        <p>Docente: {{ c.docenteNombre }}</p>
+        <p>Nota: {{ c.nota }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

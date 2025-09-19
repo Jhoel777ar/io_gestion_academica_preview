@@ -10,8 +10,12 @@ export const routes: Routes = [
     loadComponent: () => import('./login/login.page').then(m => m.LoginPage),
   },
   {
-    path: 'tabs/materias',
-    loadComponent: () => import('./materias/materias.page').then(m => m.MateriasPage),
+    path: 'tabs/docente',
+    loadComponent: () => import('./docente/docente.page').then(m => m.DocentePage),
+  },
+  {
+    path: 'tabs/estudiante',
+    loadComponent: () => import('./estudiante/estudiante.page').then(m => m.EstudiantePage),
   },
   {
     path: '',

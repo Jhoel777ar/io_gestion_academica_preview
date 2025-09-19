@@ -3,9 +3,10 @@
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="login-content">
   <div class="login-container">
-    
+
     <!-- Header -->
     <div class="header-section">
       <ion-icon name="school-outline" class="main-icon"></ion-icon>
@@ -23,181 +24,96 @@
       </ion-segment-button>
     </ion-segment>
 
-    <!-- Login Form -->
-    <form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
-      
-      <!-- Email -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="email" 
-          type="email" 
-          placeholder="Correo electrónico"
-          [class.error]="emailError">
-        </ion-input>
+    <!-- LOGIN FORM -->
+    <form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input formControlName="email" type="email" inputmode="email" placeholder="Correo electrónico"></ion-input>
       </ion-item>
-      <div *ngIf="emailError" class="error-message">
-        <ion-text color="danger">
-          <small>Email válido requerido</small>
-        </ion-text>
-      </div>
+      <div *ngIf="emailError"><ion-text color="danger">Email inválido</ion-text></div>
 
-      <!-- Password -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="password" 
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="Contraseña"
-          [class.error]="passwordError">
-        </ion-input>
-        <ion-button 
-          slot="end" 
-          fill="clear" 
-          (click)="togglePasswordVisibility()">
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'"
+          placeholder="Contraseña"></ion-input>
+        <ion-button slot="end" fill="clear" (click)="togglePasswordVisibility()">
           <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
         </ion-button>
       </ion-item>
-      <div *ngIf="passwordError" class="error-message">
-        <ion-text color="danger">
-          <small>Contraseña mínimo 6 caracteres</small>
-        </ion-text>
-      </div>
+      <div *ngIf="passwordError"><ion-text color="danger">Contraseña mínima 6 caracteres</ion-text></div>
 
-      <!-- Remember Me -->
-      <ion-item lines="none" class="checkbox-item">
+      <ion-item lines="none">
         <ion-checkbox formControlName="rememberMe" slot="start"></ion-checkbox>
-        <ion-label class="remember-label">Recordarme</ion-label>
+        <ion-label>Recordarme</ion-label>
       </ion-item>
 
-      <!-- Login Button -->
-      <ion-button 
-        expand="block" 
-        type="submit" 
-        [disabled]="!loginForm.valid"
-        class="auth-button">
-        <ion-icon name="log-in-outline" slot="start"></ion-icon>
-        Ingresar
-      </ion-button>
-
-      <!-- Forgot Password -->
-      <ion-button 
-        expand="block" 
-        fill="clear" 
-        (click)="forgotPassword()"
-        class="forgot-button">
-        ¿Olvidaste tu contraseña?
-      </ion-button>
-      
+      <ion-button expand="block" type="submit" [disabled]="!loginForm.valid">Ingresar</ion-button>
+      <ion-button expand="block" fill="clear" (click)="forgotPassword()">¿Olvidaste tu contraseña?</ion-button>
     </form>
 
-    <!-- Register Form -->
-    <form *ngIf="!isLoginMode" [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
-      
-      <!-- Email -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="email" 
-          type="email" 
-          placeholder="Correo electrónico"
-          [class.error]="regEmailError">
-        </ion-input>
+    <!-- REGISTER FORM -->
+    <form *ngIf="!isLoginMode" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input formControlName="email" type="email" inputmode="email" placeholder="Correo electrónico"></ion-input>
       </ion-item>
-      <div *ngIf="regEmailError" class="error-message">
-        <ion-text color="danger">
-          <small>Email válido requerido</small>
-        </ion-text>
+      <div *ngIf="regEmailError"><ion-text color="danger">Email inválido</ion-text></div>
+
+      <ion-item>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input formControlName="nombre" placeholder="Nombre completo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="school-outline" slot="start"></ion-icon>
+        <ion-input formControlName="universidad" placeholder="Universidad"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="library-outline" slot="start"></ion-icon>
+        <ion-input formControlName="carrera" placeholder="Carrera"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+        <ion-input formControlName="semestre" type="number" inputmode="numeric" placeholder="Semestre"></ion-input>
+      </ion-item>
+
+      <!-- ROLE SELECT -->
+      <ion-item>
+        <div slot="start"><ion-icon name="people-outline"></ion-icon></div>
+        <ion-label>Registrarme como</ion-label>
+        <ion-select formControlName="role" placeholder="Selecciona rol">
+          <ion-select-option value="estudiante">Estudiante</ion-select-option>
+          <ion-select-option value="docente">Docente</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched">
+        <ion-text color="danger">Selecciona un rol</ion-text>
       </div>
 
-      <!-- Nombre -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="nombre" 
-          placeholder="Nombre completo">
-        </ion-input>
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'"
+          placeholder="Contraseña"></ion-input>
       </ion-item>
 
-      <!-- Universidad -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="school-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="universidad" 
-          placeholder="Universidad">
-        </ion-input>
-      </ion-item>
-
-      <!-- Carrera -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="library-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="carrera" 
-          placeholder="Carrera">
-        </ion-input>
-      </ion-item>
-
-      <!-- Semestre -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="semestre" 
-          type="number" 
-          placeholder="Semestre">
-        </ion-input>
-      </ion-item>
-
-      <!-- Password -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="password" 
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="Contraseña"
-          [class.error]="regPasswordError">
-        </ion-input>
-      </ion-item>
-
-      <!-- Confirm Password -->
-      <ion-item lines="full" class="form-item">
-        <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
-        <ion-input 
-          formControlName="confirmPassword" 
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="Confirmar contraseña"
-          [class.error]="confirmPasswordError || passwordMismatch">
-        </ion-input>
-        <ion-button 
-          slot="end" 
-          fill="clear" 
-          (click)="togglePasswordVisibility()">
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input formControlName="confirmPassword" [type]="showPassword ? 'text' : 'password'"
+          placeholder="Confirmar contraseña"></ion-input>
+        <ion-button slot="end" fill="clear" (click)="togglePasswordVisibility()">
           <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
         </ion-button>
       </ion-item>
-      <div *ngIf="passwordMismatch" class="error-message">
-        <ion-text color="danger">
-          <small>Las contraseñas no coinciden</small>
-        </ion-text>
-      </div>
+      <div *ngIf="passwordMismatch"><ion-text color="danger">Las contraseñas no coinciden</ion-text></div>
 
-      <!-- Terms -->
-      <ion-item lines="none" class="checkbox-item">
+      <ion-item lines="none">
         <ion-checkbox formControlName="acceptTerms" slot="start"></ion-checkbox>
-        <ion-label class="terms-label">
-          Acepto los <a href="#" class="terms-link">términos y condiciones</a>
-        </ion-label>
+        <ion-label>Acepto términos y condiciones</ion-label>
       </ion-item>
 
-      <!-- Register Button -->
-      <ion-button 
-        expand="block" 
-        type="submit" 
-        [disabled]="!registerForm.valid"
-        class="auth-button">
-        <ion-icon name="person-add-outline" slot="start"></ion-icon>
-        Crear Cuenta
-      </ion-button>
-      
+      <ion-button expand="block" type="submit" [disabled]="!registerForm.valid">Crear Cuenta</ion-button>
     </form>
 
   </div>

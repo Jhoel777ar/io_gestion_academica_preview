@@ -1,22 +1,91 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Materias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cerrarSesion()">
+        <ion-icon [icon]="logOutIcon"></ion-icon>
+        Cerrar sesión
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-list>
     <ion-item *ngFor="let materia of materias">
       <ion-label>
         <h2>{{ materia.nombre }}</h2>
-  <p>Docente: {{ materia.docente }}</p>
+        <p>Docente: {{ materia.docente }}</p>
         <p>Créditos: {{ materia.creditos }}</p>
-  <p>Periodo: {{ materia.periodo }}</p>
+        <p>Periodo: {{ materia.periodo }}</p>
       </ion-label>
-  <ion-button color="primary" [disabled]="!materia.id" (click)="actualizarMateria(materia.id!)">Actualizar</ion-button>
-  <ion-button color="danger" [disabled]="!materia.id" (click)="eliminarMateria(materia.id!)">Eliminar</ion-button>
+
+      <ion-button color="primary" (click)="openEditModal(materia)">Actualizar</ion-button>
+      <ion-button color="danger" (click)="eliminarMateria(materia.id!)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" (click)="agregarMateria()">Agregar materia de ejemplo</ion-button>
+  <ion-button expand="block" color="success" (click)="openAddModal()">Agregar materia</ion-button>
+
+  <!-- Modal Agregar Materia -->
+  <ion-modal [isOpen]="isAddModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nueva Materia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isAddModalOpen=false">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Código</ion-label>
+          <ion-input [(ngModel)]="currentMateria.codigo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="currentMateria.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Docente</ion-label>
+          <ion-input [(ngModel)]="currentMateria.docente"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Créditos</ion-label>
+          <ion-input type="number" [(ngModel)]="currentMateria.creditos"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="success" (click)="saveNewMateria()">Guardar</ion-button>
+      </ion-content>
+  </ng-template>
+  </ion-modal>
+
+  <!-- Modal Editar Materia -->
+  <ion-modal [isOpen]="isEditModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar Materia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isEditModalOpen=false">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="currentMateria.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Docente</ion-label>
+          <ion-input [(ngModel)]="currentMateria.docente"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Créditos</ion-label>
+          <ion-input type="number" [(ngModel)]="currentMateria.creditos"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="primary" (click)="saveEditMateria()">Guardar</ion-button>
+      </ion-content>
+  </ng-template>
+  </ion-modal>
 </ion-content>

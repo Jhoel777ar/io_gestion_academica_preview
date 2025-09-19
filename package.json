@@ -35,7 +35,7 @@
     "@ionic/storage-angular": "^4.0.0",
     "cordova-plugin-network-information": "^3.0.0",
     "firebase": "^12.2.1",
-    "ionicons": "^7.0.0",
+    "ionicons": "^7.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
